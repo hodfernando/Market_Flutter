@@ -56,7 +56,7 @@ class CartEmpty extends StatelessWidget {
             ),
             color: Colors.redAccent,
             child: Text(
-              'shop now'.toUpperCase(),
+              'Shop now'.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).textSelectionColor,

@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:market/consts/colors.dart';
+import 'package:market/consts/my_icons.dart';
 import 'package:market/provider/dark_theme_provider.dart';
+import 'package:market/screens/wishlist.dart';
 import 'package:provider/provider.dart';
+
+import 'cart.dart';
 
 class UserInfo extends StatefulWidget {
   @override
@@ -11,7 +15,6 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-  bool _value = false;
   late ScrollController _scrollController;
   var top = 0.0;
 
@@ -114,6 +117,41 @@ class _UserInfoState extends State<UserInfo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: userTitle('User Bag')),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(WishlistScreen.routeName),
+                          title: Text('Wishlist'),
+                          trailing: Icon(Icons.chevron_right_rounded),
+                          leading: Icon(MyAppIcons.wishlist),
+                        ),
+                      ),
+                    ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(CartScreen.routeName);
+                          },
+                          title: Text('Cart'),
+                          trailing: Icon(Icons.chevron_right_rounded),
+                          leading: Icon(MyAppIcons.cart),
+                        ),
+                      ),
+                    ),
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: userTitle('User Information')),
