@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:market/consts/colors.dart';
+import 'package:market/screens/bottom_bar.dart';
 
 import 'auth/login.dart';
 import 'auth/sign_up.dart';
@@ -213,7 +214,9 @@ class _LandingPageState extends State<LandingPage>
                       child: Text('Google +'),
                     ),
                     OutlineButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, BottomBarScreen.routeName);
+                      },
                       shape: StadiumBorder(),
                       highlightedBorderColor: Colors.deepPurple.shade200,
                       borderSide:

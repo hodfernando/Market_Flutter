@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/provider/dark_theme_provider.dart';
 import 'package:market/provider/products.dart';
+import 'package:market/screens/bottom_bar.dart';
 import 'package:market/screens/wishlist.dart';
 import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
         child:
             Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Flutter Market',
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
             home: LandingPage(),
             //initialRoute: '/',
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
               CategoriesFeedsScreen.routeName: (ctx) => CategoriesFeedsScreen(),
               LoginScreen.routeName: (ctx) => LoginScreen(),
               SignUpScreen.routeName: (ctx) => SignUpScreen(),
+              BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
             },
           );
         }));

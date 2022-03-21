@@ -69,9 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           Column(
             children: [
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30),
               Form(
                   key: _formKey,
                   child: Column(

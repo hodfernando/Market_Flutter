@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import 'cart.dart';
 
 class UserInfo extends StatefulWidget {
+  const UserInfo({Key? key}) : super(key: key);
+
   @override
   _UserInfoState createState() => _UserInfoState();
 }
@@ -53,7 +55,7 @@ class _UserInfoState extends State<UserInfo> {
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
                           end: const FractionalOffset(1.0, 0.0),
-                          stops: [0.0, 1.0],
+                          stops: const [0.0, 1.0],
                           tileMode: TileMode.clamp),
                     ),
                     child: FlexibleSpaceBar(
@@ -64,17 +66,15 @@ class _UserInfoState extends State<UserInfo> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           AnimatedOpacity(
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             opacity: top <= 110.0 ? 1.0 : 0,
                             child: Row(
                               children: [
-                                SizedBox(
-                                  width: 12,
-                                ),
+                                const SizedBox(width: 12),
                                 Container(
                                   height: kToolbarHeight / 1.8,
                                   width: kToolbarHeight / 1.8,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.white,
@@ -89,10 +89,8 @@ class _UserInfoState extends State<UserInfo> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 12,
-                                ),
-                                Text(
+                                const SizedBox(width: 12),
+                                const Text(
                                   // 'top.toString()',
                                   'Guest',
                                   style: TextStyle(
@@ -103,7 +101,7 @@ class _UserInfoState extends State<UserInfo> {
                           ),
                         ],
                       ),
-                      background: Image(
+                      background: const Image(
                         image: NetworkImage(
                             'https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg'),
                         fit: BoxFit.fill,
@@ -120,7 +118,7 @@ class _UserInfoState extends State<UserInfo> {
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: userTitle('User Bag')),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
@@ -131,8 +129,8 @@ class _UserInfoState extends State<UserInfo> {
                         child: ListTile(
                           onTap: () => Navigator.of(context)
                               .pushNamed(WishlistScreen.routeName),
-                          title: Text('Wishlist'),
-                          trailing: Icon(Icons.chevron_right_rounded),
+                          title: const Text('Wishlist'),
+                          trailing: const Icon(Icons.chevron_right_rounded),
                           leading: Icon(MyAppIcons.wishlist),
                         ),
                       ),
@@ -146,8 +144,8 @@ class _UserInfoState extends State<UserInfo> {
                             Navigator.of(context)
                                 .pushNamed(CartScreen.routeName);
                           },
-                          title: Text('Cart'),
-                          trailing: Icon(Icons.chevron_right_rounded),
+                          title: const Text('Cart'),
+                          trailing: const Icon(Icons.chevron_right_rounded),
                           leading: Icon(MyAppIcons.cart),
                         ),
                       ),
@@ -155,7 +153,7 @@ class _UserInfoState extends State<UserInfo> {
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: userTitle('User Information')),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
@@ -167,13 +165,13 @@ class _UserInfoState extends State<UserInfo> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: userTitle('User settings'),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
                     ListTileSwitch(
                       value: themeChange.darkTheme,
-                      leading: Icon(Ionicons.md_moon),
+                      leading: const Icon(Ionicons.md_moon),
                       onChanged: (value) {
                         setState(() {
                           themeChange.darkTheme = value;
@@ -182,9 +180,23 @@ class _UserInfoState extends State<UserInfo> {
                       visualDensity: VisualDensity.comfortable,
                       switchType: SwitchType.cupertino,
                       switchActiveColor: Colors.indigo,
-                      title: Text('Dark theme'),
+                      title: const Text('Dark theme'),
                     ),
-                    userListTile('Logout', '', 4, context),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.canPop(context)
+                                ? Navigator.pop(context)
+                                : null;
+                          },
+                          title: const Text('Logout'),
+                          leading: const Icon(Icons.exit_to_app_rounded),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -198,11 +210,11 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget _buildFab() {
     //starting fab position
-    final double defaultTopMargin = 200.0 - 4.0;
+    const double defaultTopMargin = 200.0 - 4.0;
     //pixels from top where scaling should start
-    final double scaleStart = 160.0;
+    const double scaleStart = 160.0;
     //pixels from top where scaling should end
-    final double scaleEnd = scaleStart / 2;
+    const double scaleEnd = scaleStart / 2;
 
     double top = defaultTopMargin;
     double scale = 1.0;
@@ -231,13 +243,13 @@ class _UserInfoState extends State<UserInfo> {
           backgroundColor: Colors.purple,
           heroTag: "btn1",
           onPressed: () {},
-          child: Icon(Icons.camera_alt_outlined),
+          child: const Icon(Icons.camera_alt_outlined),
         ),
       ),
     );
   }
 
-  List<IconData> _userTileIcons = [
+  final List<IconData> _userTileIcons = [
     Icons.email,
     Icons.phone,
     Icons.local_shipping,
@@ -266,7 +278,7 @@ class _UserInfoState extends State<UserInfo> {
       padding: const EdgeInsets.all(14.0),
       child: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
     );
   }

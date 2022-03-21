@@ -71,7 +71,8 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        backLayer: BackLayerMenu(),
+        backLayer: Center(child: Text("BackLayerMenu")),
+        // BackLayerMenu(),
         //TODO
         frontLayer: SingleChildScrollView(
           child: Column(
@@ -84,7 +85,7 @@ class _HomeState extends State<Home> {
                   boxFit: BoxFit.fill,
                   autoplay: true,
                   animationCurve: Curves.fastOutSlowIn,
-                  animationDuration: Duration(milliseconds: 1000),
+                  animationDuration: const Duration(milliseconds: 1000),
                   dotSize: 5.0,
                   dotIncreasedColor: Colors.purple,
                   dotBgColor: Colors.black.withOpacity(0.2),
