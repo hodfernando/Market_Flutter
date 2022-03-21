@@ -20,7 +20,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
 
   @override
   void didChangeDependencies() {
-    routeArgs = ModalRoute.of(context)!.settings.arguments.toString(); //TODO
+    routeArgs = ModalRoute.of(context)!.settings.arguments.toString();
     _selectedIndex = int.parse(
       routeArgs.substring(1, 2),
     );

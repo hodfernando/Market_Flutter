@@ -149,7 +149,7 @@ class BackLayerMenu extends StatelessWidget {
 
   Widget content(BuildContext ctx, Function fct, String text, int index) {
     return InkWell(
-      onTap: fct(), //TODO
+      onTap: fct(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

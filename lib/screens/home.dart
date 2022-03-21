@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market/consts/colors.dart';
+import 'package:market/inner_screens/brands_navigation_rail.dart';
+import 'package:market/widget/backlayer.dart';
+import 'package:market/widget/category.dart';
+import 'package:market/widget/popular_products.dart';
 
 class Home extends StatefulWidget {
   static const routeName = '/Home';
@@ -62,79 +66,152 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        backLayer: Center(
-          child: Text("Back Layer"),
+        backLayer:
+            // BackLayerMenu(),
+            Center(
+          child: Text("Back Layer"), //TODO
         ),
-        frontLayer: Column(
-          children: [
-            Container(
-              height: 190.0,
-              width: double.infinity,
-              child: Carousel(
-                boxFit: BoxFit.fill,
-                autoplay: true,
-                animationCurve: Curves.fastOutSlowIn,
-                animationDuration: Duration(milliseconds: 1000),
-                dotSize: 5.0,
-                dotIncreasedColor: Colors.purple,
-                dotBgColor: Colors.black.withOpacity(0.2),
-                dotPosition: DotPosition.bottomCenter,
-                showIndicator: true,
-                indicatorBgPadding: 5.0,
-                images: [
-                  ExactAssetImage(_carouselImages[0]),
-                  ExactAssetImage(_carouselImages[1]),
-                  ExactAssetImage(_carouselImages[2]),
-                  ExactAssetImage(_carouselImages[3]),
-                ],
+        frontLayer: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 190.0,
+                width: double.infinity,
+                child: Carousel(
+                  boxFit: BoxFit.fill,
+                  autoplay: true,
+                  animationCurve: Curves.fastOutSlowIn,
+                  animationDuration: Duration(milliseconds: 1000),
+                  dotSize: 5.0,
+                  dotIncreasedColor: Colors.purple,
+                  dotBgColor: Colors.black.withOpacity(0.2),
+                  dotPosition: DotPosition.bottomCenter,
+                  showIndicator: true,
+                  indicatorBgPadding: 5.0,
+                  images: [
+                    ExactAssetImage(_carouselImages[0]),
+                    ExactAssetImage(_carouselImages[1]),
+                    ExactAssetImage(_carouselImages[2]),
+                    ExactAssetImage(_carouselImages[3]),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Popular Brands',
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                  ),
-                  Spacer(),
-                  FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      'View all...',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15,
-                          color: Colors.red),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 180,
+                child: ListView.builder(
+                  itemCount: 7,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return CategoryWidget(
+                      index: index,
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Popular Brands',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              height: 210,
-              width: MediaQuery.of(context).size.width * 0.95,
-              child: Swiper(
-                itemCount: _brandImages.length,
-                autoplay: true,
-                viewportFraction: 0.8,
-                scale: 0.9,
-                onTap: (index) {},
-                itemBuilder: (BuildContext ctx, int index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      color: Colors.blueGrey,
-                      child: Image.asset(
-                        _brandImages[index],
-                        fit: BoxFit.fill,
+                    Spacer(),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          BrandNavigationRailScreen.routeName,
+                          arguments: {
+                            7,
+                          },
+                        );
+                      },
+                      child: Text(
+                        'View all...',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15,
+                            color: Colors.red),
                       ),
-                    ),
-                  );
-                },
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+              Container(
+                height: 210,
+                width: MediaQuery.of(context).size.width * 0.95,
+                child: Swiper(
+                  itemCount: _brandImages.length,
+                  autoplay: true,
+                  viewportFraction: 0.8,
+                  scale: 0.9,
+                  onTap: (index) {
+                    Navigator.of(context).pushNamed(
+                      BrandNavigationRailScreen.routeName,
+                      arguments: {
+                        index,
+                      },
+                    );
+                  },
+                  itemBuilder: (BuildContext ctx, int index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        color: Colors.blueGrey,
+                        child: Image.asset(
+                          _brandImages[index],
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Popular Products',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                    ),
+                    Spacer(),
+                    FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View all...',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15,
+                            color: Colors.red),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 285,
+                margin: EdgeInsets.symmetric(horizontal: 3),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 8,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return PopularProducts();
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
