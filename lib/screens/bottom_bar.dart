@@ -76,26 +76,26 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(MyAppIcons.home),
-                  title: Text('Home'),
+                  label: 'Home',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(MyAppIcons.rss),
-                  title: Text('Feeds'),
+                  label: 'Feeds',
                 ),
                 BottomNavigationBarItem(
                   activeIcon: null,
                   icon: Icon(null),
-                  title: Text('Search'),
+                  label: 'Search',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    MyAppIcons.bag,
+                    MyAppIcons.bag
                   ),
-                  title: Text('Cart'),
+                  label: 'Cart',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(MyAppIcons.user),
-                  title: Text('User'),
+                  label: 'User',
                 ),
               ],
             ),

@@ -1,15 +1,15 @@
 import 'package:backdrop/backdrop.dart';
+import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_pro/carousel_pro.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:market/consts/colors.dart';
 import 'package:market/inner_screens/brands_navigation_rail.dart';
 import 'package:market/provider/products.dart';
-import 'package:market/widget/backlayer.dart';
 import 'package:market/widget/category.dart';
 import 'package:market/widget/popular_products.dart';
 import 'package:provider/provider.dart';
 
+import '../widget/backlayer.dart';
 import 'feeds.dart';
 
 class Home extends StatefulWidget {
@@ -71,8 +71,9 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        backLayer: Center(child: Text("BackLayerMenu")),
-        // BackLayerMenu(),
+        backLayer:
+        // Center(child: Text("BackLayerMenu")),
+        BackLayerMenu(),
         //TODO
         frontLayer: SingleChildScrollView(
           child: Column(
@@ -93,10 +94,10 @@ class _HomeState extends State<Home> {
                   showIndicator: true,
                   indicatorBgPadding: 5.0,
                   images: [
-                    ExactAssetImage(_carouselImages[0]),
-                    ExactAssetImage(_carouselImages[1]),
-                    ExactAssetImage(_carouselImages[2]),
-                    ExactAssetImage(_carouselImages[3]),
+                    Image.asset(_carouselImages[0]),
+                    Image.asset(_carouselImages[1]),
+                    Image.asset(_carouselImages[2]),
+                    Image.asset(_carouselImages[3]),
                   ],
                 ),
               ),
