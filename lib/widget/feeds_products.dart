@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
-import 'package:market/inner_screens/product_details.dart';
-import 'package:market/models/product.dart';
-import 'package:market/provider/cart_provider.dart';
 import 'package:provider/provider.dart';
-
+import '../inner_screens/product_details.dart';
+import '../models/product.dart';
+import '../provider/cart_provider.dart';
 import 'feeds.dialog.dart';
 
 class FeedProducts extends StatefulWidget {
@@ -39,10 +38,7 @@ class _FeedProductsState extends State<FeedProducts> {
                         borderRadius: BorderRadius.circular(2),
                         child: Container(
                           width: double.infinity,
-                          constraints: BoxConstraints(
-                              minHeight: 100,
-                              maxHeight:
-                                  MediaQuery.of(context).size.height * 0.3),
+                          height: MediaQuery.of(context).size.height * 0.3,
                           child: Image.network(
                             productsAttributes.imageUrl,
                             //   fit: BoxFit.fitWidth,
@@ -60,7 +56,7 @@ class _FeedProductsState extends State<FeedProducts> {
                           badgeColor: Colors.pink,
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(8)),
-                          badgeContent: Text('New',
+                          badgeContent: Text('Novo',
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
@@ -111,19 +107,20 @@ class _FeedProductsState extends State<FeedProducts> {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                              onTap: () async {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => FeedDialog(
-                                    productId: productsAttributes.id,
-                                  ),
-                                );
-                              },
-                              borderRadius: BorderRadius.circular(18.0),
-                              child: Icon(
-                                Icons.more_horiz,
-                                color: Colors.grey,
-                              )),
+                            onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => FeedDialog(
+                                  productId: productsAttributes.id,
+                                ),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(18.0),
+                            child: Icon(
+                              Icons.more_horiz,
+                              color: Colors.grey,
+                            ),
+                          ),
                         )
                       ],
                     ),

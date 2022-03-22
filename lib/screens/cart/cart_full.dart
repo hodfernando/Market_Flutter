@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/inner_screens/product_details.dart';
-import 'package:market/models/cart_attr.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/provider/dark_theme_provider.dart';
-import 'package:market/services/global_method.dart';
 import 'package:provider/provider.dart';
+
+import '../../consts/colors.dart';
+import '../../inner_screens/product_details.dart';
+import '../../models/cart_attr.dart';
+import '../../provider/cart_provider.dart';
+import '../../provider/dark_theme_provider.dart';
+import '../../services/global_method.dart';
 
 class CartFull extends StatefulWidget {
   final String productId;
@@ -110,9 +111,7 @@ class _CartFullState extends State<CartFull> {
                     Row(
                       children: [
                         Text('Price:'),
-                        SizedBox(
-                          width: 5,
-                        ),
+                        SizedBox(width: 5),
                         Text(
                           '${cartAttr.price}\$',
                           style: TextStyle(

@@ -1,24 +1,36 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/models/product.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/provider/favs_provider.dart';
-import 'package:market/provider/products.dart';
-import 'package:market/screens/wishlist.dart';
-import 'package:market/widget/feeds_products.dart';
+import 'package:market/screens/wishlist/wishlist.dart';
 import 'package:provider/provider.dart';
+import '../consts/colors.dart';
+import '../consts/my_icons.dart';
+import '../models/product.dart';
+import '../provider/cart_provider.dart';
+import '../provider/favs_provider.dart';
+import '../provider/products.dart';
+import '../widget/feeds_products.dart';
+import 'cart/cart.dart';
 
-import 'cart.dart';
-
-class Feeds extends StatelessWidget {
+class Feeds extends StatefulWidget {
   static const routeName = '/Feeds';
+
+  @override
+  _FeedsState createState() => _FeedsState();
+}
+
+class _FeedsState extends State<Feeds> {
+  Future<void> _getProductsOnRefresh() async {
+    await Provider.of<Products>(context, listen: false).fetchProducts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     final popular = ModalRoute.of(context)!.settings.arguments as String;
-    final productsProvider = Provider.of<Products>(context);
+    final productsProvider = Provider.of<Products>(
+      context,
+    );
+
     List<Product> productsList = productsProvider.products;
     if (popular == 'popular') {
       productsList = productsProvider.popularProducts;
@@ -72,18 +84,22 @@ class Feeds extends StatelessWidget {
           ),
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 240 / 420,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        children: List.generate(productsList.length, (index) {
-          return ChangeNotifierProvider.value(
-            value: productsList[index],
-            child: FeedProducts(),
-          );
-        }),
+      body: RefreshIndicator(
+        onRefresh: _getProductsOnRefresh,
+        child: GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 240 / 420,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          children: List.generate(productsList.length, (index) {
+            return ChangeNotifierProvider.value(
+              value: productsList[index],
+              child: FeedProducts(),
+            );
+          }),
+        ),
       ),
+
 //         StaggeredGridView.countBuilder(
 //           padding: ,
 //   crossAxisCount: 6,

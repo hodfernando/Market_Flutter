@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:market/models/favs_attr.dart';
+
+import '../models/favs_attr.dart';
 
 class FavsProvider with ChangeNotifier {
   Map<String, FavsAttr> _favsItems = {};

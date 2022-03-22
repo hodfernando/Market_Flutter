@@ -1,16 +1,17 @@
 import 'dart:ui';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/provider/dark_theme_provider.dart';
-import 'package:market/provider/favs_provider.dart';
-import 'package:market/provider/products.dart';
-import 'package:market/screens/cart.dart';
-import 'package:market/screens/wishlist.dart';
-import 'package:market/widget/feeds_products.dart';
 import 'package:provider/provider.dart';
+
+import '../consts/colors.dart';
+import '../consts/my_icons.dart';
+import '../provider/cart_provider.dart';
+import '../provider/dark_theme_provider.dart';
+import '../provider/favs_provider.dart';
+import '../provider/products.dart';
+import '../screens/cart/cart.dart';
+import '../screens/wishlist/wishlist.dart';
+import '../widget/feeds_products.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -113,9 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
+                            SizedBox(height: 8),
                             Text(
                               'US \$ ${prodAttr.price}',
                               style: TextStyle(
@@ -168,9 +167,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           prodAttr.productCategoryName),
                       _details(themeState.darkTheme, 'Popularity: ',
                           prodAttr.isPopular ? 'Popular' : 'Barely known'),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       Divider(
                         thickness: 1,
                         color: Colors.grey,
@@ -208,9 +205,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 70,
-                            ),
+                            SizedBox(height: 70),
                             Divider(
                               thickness: 1,
                               color: Colors.grey,
@@ -237,7 +232,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   width: double.infinity,
                   height: 340,
                   child: ListView.builder(
-                    itemCount: 7,
+                    itemCount:
+                        productsList.length < 7 ? productsList.length : 7,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext ctx, int index) {
                       return ChangeNotifierProvider.value(

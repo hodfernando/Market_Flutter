@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/inner_screens/product_details.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/provider/dark_theme_provider.dart';
-import 'package:market/provider/favs_provider.dart';
-import 'package:market/provider/products.dart';
 import 'package:provider/provider.dart';
+import '../consts/colors.dart';
+import '../consts/my_icons.dart';
+import '../inner_screens/product_details.dart';
+import '../provider/cart_provider.dart';
+import '../provider/dark_theme_provider.dart';
+import '../provider/favs_provider.dart';
+import '../provider/products.dart';
 
 class FeedDialog extends StatelessWidget {
   final String productId;

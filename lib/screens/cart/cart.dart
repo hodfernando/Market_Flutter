@@ -1,18 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/services/global_method.dart';
-import 'package:market/widget/cart_empty.dart';
-import 'package:market/widget/cart_full.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:uuid/uuid.dart';
+import '../../consts/colors.dart';
+import '../../consts/my_icons.dart';
+import '../../provider/cart_provider.dart';
+import '../../services/global_method.dart';
+import '../../services/payment.dart';
+import 'cart_empty.dart';
+import 'cart_full.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
+  //To be known 1) the amount must be an integer 2) the amount must not be double 3) the minimum amount should be less than 0.5 $
   static const routeName = '/CartScreen';
 
   @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    StripeService.init();
+  }
+
+  var response;
+
+  Future<void> payWithCard({required int amount}) async {
+    ProgressDialog dialog = ProgressDialog(context: context);
+    await dialog.show(msg: 'Please wait...', max: 100, msgMaxLines: 0);
+    // await dialog.show();
+    response = await StripeService.payWithNewCard(
+        currency: 'USD', amount: amount.toString());
+    dialog.close();
+    print('response : ${response.success}');
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(response.message),
+      duration: Duration(milliseconds: response.success == true ? 1200 : 3000),
+    ));
+  }
+
+  GlobalMethods globalMethods = GlobalMethods();
+
+  @override
   Widget build(BuildContext context) {
-    GlobalMethods globalMethods = GlobalMethods();
     final cartProvider = Provider.of<CartProvider>(context);
 
     return cartProvider.getCartItems.isEmpty
@@ -60,6 +95,9 @@ class CartScreen extends StatelessWidget {
   }
 
   Widget checkoutSection(BuildContext ctx, double subtotal) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    var uuid = Uuid();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
     return Container(
         decoration: BoxDecoration(
           border: Border(
@@ -88,7 +126,39 @@ class CartScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
-                      onTap: () {},
+                      onTap: () async {
+                        double amountInCents = subtotal * 1000;
+                        int intengerAmount = (amountInCents / 10).ceil();
+                        await payWithCard(amount: intengerAmount);
+                        if (response.success == true) {
+                          User user = _auth.currentUser!;
+                          final _uid = user.uid;
+                          cartProvider.getCartItems
+                              .forEach((key, orderValue) async {
+                            final orderId = uuid.v4();
+                            try {
+                              await FirebaseFirestore.instance
+                                  .collection('order')
+                                  .doc(orderId)
+                                  .set({
+                                'orderId': orderId,
+                                'userId': _uid,
+                                'productId': orderValue.productId,
+                                'title': orderValue.title,
+                                'price': orderValue.price * orderValue.quantity,
+                                'imageUrl': orderValue.imageUrl,
+                                'quantity': orderValue.quantity,
+                                'orderDate': Timestamp.now(),
+                              });
+                            } catch (err) {
+                              print('error occured $err');
+                            }
+                          });
+                        } else {
+                          globalMethods.authErrorHandle(
+                              'Please enter your true information', context);
+                        }
+                      },
                       splashColor: Theme.of(ctx).splashColor,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:market/provider/products.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
-
+import '../provider/products.dart';
 import 'brands_rail_widget.dart';
 
 class BrandNavigationRailScreen extends StatefulWidget {
@@ -17,15 +17,13 @@ class BrandNavigationRailScreen extends StatefulWidget {
 class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
   int _selectedIndex = 0;
   final padding = 8.0;
-  late String routeArgs;
-  late String brand;
+  String routeArgs = "";
+  String brand = "";
 
   @override
   void didChangeDependencies() {
     routeArgs = ModalRoute.of(context)!.settings.arguments.toString();
-    _selectedIndex = int.parse(
-      routeArgs.substring(1, 2),
-    );
+    _selectedIndex = int.parse(routeArgs.substring(1, 2));
     print(routeArgs.toString());
     if (_selectedIndex == 0) {
       setState(() {
@@ -134,9 +132,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                       labelType: NavigationRailLabelType.all,
                       leading: Column(
                         children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
+                          SizedBox(height: 20),
                           Center(
                             child: CircleAvatar(
                               radius: 16,
@@ -144,9 +140,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                                   "https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg"),
                             ),
                           ),
-                          SizedBox(
-                            height: 80,
-                          ),
+                          SizedBox(height: 80),
                         ],
                       ),
                       selectedLabelTextStyle: TextStyle(
@@ -215,7 +209,7 @@ class ContentSpace extends StatelessWidget {
         productsBrand.add(productsData.products[i]);
       }
     }
-    print('productsBrand ${productsBrand[0].imageUrl}');
+    // print('productsBrand ${productsBrand[0].imageUrl}');
     print('brand $brand');
     return Expanded(
       child: Padding(
@@ -223,12 +217,31 @@ class ContentSpace extends StatelessWidget {
         child: MediaQuery.removePadding(
           removeTop: true,
           context: context,
-          child: ListView.builder(
-            itemCount: productsBrand.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ChangeNotifierProvider.value(
-                    value: productsBrand[index], child: BrandsNavigationRail()),
-          ),
+          child: productsBrand.isEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Feather.database,
+                      size: 80,
+                    ),
+                    SizedBox(height: 40),
+                    Text(
+                      'No products related to this brand',
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  itemCount: productsBrand.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      ChangeNotifierProvider.value(
+                          value: productsBrand[index],
+                          child: BrandsNavigationRail()),
+                ),
         ),
       ),
     );

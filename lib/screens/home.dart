@@ -2,14 +2,13 @@ import 'package:backdrop/backdrop.dart';
 import 'package:carousel_pro_nullsafety/carousel_pro_nullsafety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/inner_screens/brands_navigation_rail.dart';
-import 'package:market/provider/products.dart';
-import 'package:market/widget/category.dart';
-import 'package:market/widget/popular_products.dart';
 import 'package:provider/provider.dart';
-
+import '../consts/colors.dart';
+import '../inner_screens/brands_navigation_rail.dart';
+import '../provider/products.dart';
 import '../widget/backlayer.dart';
+import '../widget/category.dart';
+import '../widget/popular_products.dart';
 import 'feeds.dart';
 
 class Home extends StatefulWidget {
@@ -38,6 +37,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
+    productsData.fetchProducts();
+
     final popularItems = productsData.popularProducts;
     print('popularItems length ${popularItems.length}');
     return Scaffold(
@@ -71,10 +72,7 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        backLayer:
-        // Center(child: Text("BackLayerMenu")),
-        BackLayerMenu(),
-        //TODO
+        backLayer: BackLayerMenu(),
         frontLayer: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +84,7 @@ class _HomeState extends State<Home> {
                   boxFit: BoxFit.fill,
                   autoplay: true,
                   animationCurve: Curves.fastOutSlowIn,
-                  animationDuration: const Duration(milliseconds: 1000),
+                  animationDuration: Duration(milliseconds: 1000),
                   dotSize: 5.0,
                   dotIncreasedColor: Colors.purple,
                   dotBgColor: Colors.black.withOpacity(0.2),
@@ -115,9 +113,7 @@ class _HomeState extends State<Home> {
                   itemCount: 7,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext ctx, int index) {
-                    return CategoryWidget(
-                      index: index,
-                    );
+                    return CategoryWidget(index: index);
                   },
                 ),
               ),
@@ -135,9 +131,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           BrandNavigationRailScreen.routeName,
-                          arguments: {
-                            7,
-                          },
+                          arguments: {7},
                         );
                       },
                       child: Text(

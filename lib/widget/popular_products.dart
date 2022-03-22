@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:market/inner_screens/product_details.dart';
-import 'package:market/models/product.dart';
-import 'package:market/provider/cart_provider.dart';
-import 'package:market/provider/favs_provider.dart';
 import 'package:provider/provider.dart';
+import '../inner_screens/product_details.dart';
+import '../models/product.dart';
+import '../provider/cart_provider.dart';
+import '../provider/favs_provider.dart';
 
 class PopularProducts extends StatelessWidget {
   // final String imageUrl;
@@ -51,9 +51,10 @@ class PopularProducts extends StatelessWidget {
                     Container(
                       height: 170,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(productsAttributes.imageUrl),
-                              fit: BoxFit.contain)),
+                        image: DecorationImage(
+                            image: NetworkImage(productsAttributes.imageUrl),
+                            fit: BoxFit.contain),
+                      ),
                     ),
                     Positioned(
                       right: 10,

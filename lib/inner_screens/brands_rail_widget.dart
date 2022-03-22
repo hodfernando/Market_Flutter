@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market/inner_screens/product_details.dart';
-import 'package:market/models/product.dart';
 import 'package:provider/provider.dart';
+import '../models/product.dart';
 
 class BrandsNavigationRail extends StatelessWidget {
   @override
@@ -63,9 +63,7 @@ class BrandsNavigationRail extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: Theme.of(context).textSelectionColor),
                     ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
+                    SizedBox(height: 20.0),
                     FittedBox(
                       child: Text('US ${productsAttributes.price} \$',
                           maxLines: 1,
@@ -74,14 +72,10 @@ class BrandsNavigationRail extends StatelessWidget {
                             fontSize: 30.0,
                           )),
                     ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
+                    SizedBox(height: 20.0),
                     Text(productsAttributes.productCategoryName,
                         style: TextStyle(color: Colors.grey, fontSize: 18.0)),
-                    SizedBox(
-                      height: 20.0,
-                    ),
+                    SizedBox(height: 20.0),
                   ],
                 ),
               ),

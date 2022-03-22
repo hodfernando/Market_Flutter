@@ -1,17 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/provider/dark_theme_provider.dart';
-import 'package:market/screens/wishlist.dart';
+import 'package:market/screens/wishlist/wishlist.dart';
 import 'package:provider/provider.dart';
-
-import 'cart.dart';
+import '../consts/colors.dart';
+import '../consts/my_icons.dart';
+import '../provider/dark_theme_provider.dart';
+import 'cart/cart.dart';
+import 'orders/order.dart';
 
 class UserInfo extends StatefulWidget {
-  const UserInfo({Key? key}) : super(key: key);
-
   @override
   _UserInfoState createState() => _UserInfoState();
 }
@@ -19,6 +19,13 @@ class UserInfo extends StatefulWidget {
 class _UserInfoState extends State<UserInfo> {
   late ScrollController _scrollController;
   var top = 0.0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _uid = "";
+  String _name = "";
+  String _email = "";
+  String _joinedAt = "";
+  String _userImageUrl = "";
+  String _phoneNumber = "";
 
   @override
   void initState() {
@@ -27,6 +34,30 @@ class _UserInfoState extends State<UserInfo> {
     _scrollController.addListener(() {
       setState(() {});
     });
+    getData();
+  }
+
+  void getData() async {
+    User user = _auth.currentUser!;
+    _uid = user.uid;
+
+    print('user.displayName ${user.displayName}');
+    print('user.photoURL ${user.photoURL}');
+    final DocumentSnapshot? userDoc = user.isAnonymous
+        ? null
+        : await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    if (userDoc == null) {
+      return;
+    } else {
+      setState(() {
+        _name = userDoc.get('name');
+        _email = user.email!;
+        _joinedAt = userDoc.get('joinedAt');
+        _phoneNumber = userDoc.get('phoneNumber');
+        _userImageUrl = userDoc.get('imageUrl');
+      });
+    }
+    // print("name $_name");
   }
 
   @override
@@ -39,8 +70,9 @@ class _UserInfoState extends State<UserInfo> {
             controller: _scrollController,
             slivers: <Widget>[
               SliverAppBar(
-                automaticallyImplyLeading: false,
-                elevation: 4,
+                // leading: Icon(Icons.ac_unit_outlined),
+                // automaticallyImplyLeading: false,
+                elevation: 0,
                 expandedHeight: 200,
                 pinned: true,
                 flexibleSpace: LayoutBuilder(builder:
@@ -55,55 +87,49 @@ class _UserInfoState extends State<UserInfo> {
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
                           end: const FractionalOffset(1.0, 0.0),
-                          stops: const [0.0, 1.0],
+                          stops: [0.0, 1.0],
                           tileMode: TileMode.clamp),
                     ),
                     child: FlexibleSpaceBar(
-                      collapseMode: CollapseMode.parallax,
+                      // collapseMode: CollapseMode.parallax,
                       centerTitle: true,
-                      title: Row(
-                        //  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 300),
-                            opacity: top <= 110.0 ? 1.0 : 0,
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 12),
-                                Container(
-                                  height: kToolbarHeight / 1.8,
-                                  width: kToolbarHeight / 1.8,
-                                  decoration: const BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.white,
-                                        blurRadius: 1.0,
-                                      ),
-                                    ],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(
-                                          'https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg'),
-                                    ),
+                      title: AnimatedOpacity(
+                        duration: Duration(milliseconds: 300),
+                        opacity: top <= 110.0 ? 1.0 : 0,
+                        child: Row(
+                          children: [
+                            SizedBox(width: 12),
+                            Container(
+                              height: kToolbarHeight / 1.8,
+                              width: kToolbarHeight / 1.8,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    blurRadius: 1.0,
                                   ),
+                                ],
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(_userImageUrl.isEmpty ?
+                                      'https://cdn-icons-png.flaticon.com/512/3011/3011270.png' : _userImageUrl),
                                 ),
-                                const SizedBox(width: 12),
-                                const Text(
-                                  // 'top.toString()',
-                                  'Guest',
-                                  style: TextStyle(
-                                      fontSize: 20.0, color: Colors.white),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 12),
+                            Text(
+                              // 'top.toString()',
+                              _name == null ? 'Guest' : _name,
+                              style: TextStyle(
+                                  fontSize: 20.0, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
-                      background: const Image(
-                        image: NetworkImage(
-                            'https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg'),
+                      background: Image(
+                        image: NetworkImage(_userImageUrl.isEmpty ?
+                        'https://cdn-icons-png.flaticon.com/512/3011/3011270.png' : _userImageUrl),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -117,61 +143,63 @@ class _UserInfoState extends State<UserInfo> {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle('User Bag')),
-                    const Divider(
+                        child: userTitle(title: 'User Bag')),
+                    Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        splashColor: Theme.of(context).splashColor,
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(WishlistScreen.routeName),
+                        splashColor: Colors.red,
                         child: ListTile(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(WishlistScreen.routeName),
-                          title: const Text('Wishlist'),
-                          trailing: const Icon(Icons.chevron_right_rounded),
+                          title: Text('Wishlist'),
+                          trailing: Icon(Icons.chevron_right_rounded),
                           leading: Icon(MyAppIcons.wishlist),
                         ),
                       ),
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Theme.of(context).splashColor,
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(CartScreen.routeName);
-                          },
-                          title: const Text('Cart'),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          leading: Icon(MyAppIcons.cart),
-                        ),
-                      ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(CartScreen.routeName);
+                      },
+                      title: Text('Cart'),
+                      trailing: Icon(Icons.chevron_right_rounded),
+                      leading: Icon(MyAppIcons.cart),
+                    ),
+                    ListTile(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(OrderScreen.routeName),
+                      title: Text('My Orders'),
+                      trailing: Icon(Icons.chevron_right_rounded),
+                      leading: Icon(MyAppIcons.bag),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle('User Information')),
-                    const Divider(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: userTitle(title: 'User Information'),
+                    ),
+                    Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('Email', 'Email sub', 0, context),
-                    userListTile('Phone number', '4555', 1, context),
+                    userListTile('Email', _email, 0, context),
+                    userListTile('Phone number', _phoneNumber,
+                        1, context),
                     userListTile('Shipping address', '', 2, context),
-                    userListTile('joined date', 'date', 3, context),
+                    userListTile('joined date', _joinedAt, 3, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: userTitle('User settings'),
+                      child: userTitle(title: 'User settings'),
                     ),
-                    const Divider(
+                    Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
                     ListTileSwitch(
                       value: themeChange.darkTheme,
-                      leading: const Icon(Ionicons.md_moon),
+                      leading: Icon(Ionicons.md_moon),
                       onChanged: (value) {
                         setState(() {
                           themeChange.darkTheme = value;
@@ -180,20 +208,59 @@ class _UserInfoState extends State<UserInfo> {
                       visualDensity: VisualDensity.comfortable,
                       switchType: SwitchType.cupertino,
                       switchActiveColor: Colors.indigo,
-                      title: const Text('Dark theme'),
+                      title: Text('Dark theme'),
                     ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
-                          onTap: () {
-                            Navigator.canPop(context)
-                                ? Navigator.pop(context)
-                                : null;
+                          onTap: () async {
+                            // Navigator.canPop(context)? Navigator.pop(context):null;
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext ctx) {
+                                  return AlertDialog(
+                                    title: Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 6.0),
+                                          child: Image.network(
+                                            'https://image.flaticon.com/icons/png/128/1828/1828304.png',
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text('Sign out'),
+                                        ),
+                                      ],
+                                    ),
+                                    content: Text('Do you wanna Sign out?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel')),
+                                      TextButton(
+                                          onPressed: () async {
+                                            await _auth.signOut().then(
+                                                (value) =>
+                                                    Navigator.pop(context));
+                                          },
+                                          child: Text(
+                                            'Ok',
+                                            style: TextStyle(color: Colors.red),
+                                          ))
+                                    ],
+                                  );
+                                });
                           },
-                          title: const Text('Logout'),
-                          leading: const Icon(Icons.exit_to_app_rounded),
+                          title: Text('Logout'),
+                          leading: Icon(Icons.exit_to_app_rounded),
                         ),
                       ),
                     ),
@@ -210,11 +277,11 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget _buildFab() {
     //starting fab position
-    const double defaultTopMargin = 200.0 - 4.0;
+    final double defaultTopMargin = 200.0 - 4.0;
     //pixels from top where scaling should start
-    const double scaleStart = 160.0;
+    final double scaleStart = 160.0;
     //pixels from top where scaling should end
-    const double scaleEnd = scaleStart / 2;
+    final double scaleEnd = scaleStart / 2;
 
     double top = defaultTopMargin;
     double scale = 1.0;
@@ -223,9 +290,11 @@ class _UserInfoState extends State<UserInfo> {
       top -= offset;
       if (offset < defaultTopMargin - scaleStart) {
         //offset small => don't scale down
+
         scale = 1.0;
       } else if (offset < defaultTopMargin - scaleEnd) {
         //offset between scaleStart and scaleEnd => scale down
+
         scale = (defaultTopMargin - scaleEnd - offset) / scaleEnd;
       } else {
         //offset passed scaleEnd => hide fab
@@ -243,13 +312,13 @@ class _UserInfoState extends State<UserInfo> {
           backgroundColor: Colors.purple,
           heroTag: "btn1",
           onPressed: () {},
-          child: const Icon(Icons.camera_alt_outlined),
+          child: Icon(Icons.camera_alt_outlined),
         ),
       ),
     );
   }
 
-  final List<IconData> _userTileIcons = [
+  List<IconData> _userTileIcons = [
     Icons.email,
     Icons.phone,
     Icons.local_shipping,
@@ -259,26 +328,19 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget userListTile(
       String title, String subTitle, int index, BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashColor: Theme.of(context).splashColor,
-        child: ListTile(
-          onTap: () {},
-          title: Text(title),
-          subtitle: Text(subTitle),
-          leading: Icon(_userTileIcons[index]),
-        ),
-      ),
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(subTitle),
+      leading: Icon(_userTileIcons[index]),
     );
   }
 
-  Widget userTitle(String title) {
+  Widget userTitle({required String title}) {
     return Padding(
       padding: const EdgeInsets.all(14.0),
       child: Text(
         title,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
     );
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/models/product.dart';
-import 'package:market/provider/products.dart';
-import 'package:market/widget/feeds_products.dart';
-import 'package:market/widget/searchby_header.dart';
 import 'package:provider/provider.dart';
+import '../consts/colors.dart';
+import '../models/product.dart';
+import '../provider/products.dart';
+import '../widget/feeds_products.dart';
+import '../widget/searchby_header.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -120,16 +120,12 @@ class _SearchState extends State<Search> {
             child: _searchTextController.text.isNotEmpty && _searchList.isEmpty
                 ? Column(
                     children: [
-                      SizedBox(
-                        height: 50,
-                      ),
+                      SizedBox(height: 50),
                       Icon(
                         Feather.search,
                         size: 60,
                       ),
-                      SizedBox(
-                        height: 50,
-                      ),
+                      SizedBox(height: 50),
                       Text(
                         'No results found',
                         style: TextStyle(

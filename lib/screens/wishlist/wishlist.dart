@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:market/consts/my_icons.dart';
-import 'package:market/provider/favs_provider.dart';
-import 'package:market/services/global_method.dart';
-import 'package:market/widget/wishlist_empty.dart';
-import 'package:market/widget/wishlist_full.dart';
 import 'package:provider/provider.dart';
+
+import '../../consts/my_icons.dart';
+import '../../provider/favs_provider.dart';
+import '../../services/global_method.dart';
+import 'wishlist_empty.dart';
+import 'wishlist_full.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const routeName = '/WishlistScreen';

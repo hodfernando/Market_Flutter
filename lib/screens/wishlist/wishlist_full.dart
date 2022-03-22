@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:market/consts/colors.dart';
-import 'package:market/models/favs_attr.dart';
-import 'package:market/provider/favs_provider.dart';
-import 'package:market/services/global_method.dart';
 import 'package:provider/provider.dart';
+
+import '../../consts/colors.dart';
+import '../../models/favs_attr.dart';
+import '../../provider/favs_provider.dart';
+import '../../services/global_method.dart';
 
 class WishlistFull extends StatefulWidget {
   final String productId;

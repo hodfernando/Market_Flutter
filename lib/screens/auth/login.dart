@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:market/consts/colors.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+
+import '../../consts/colors.dart';
+import '../../services/global_method.dart';
+import 'forget_password.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
@@ -17,6 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String _emailAddress = '';
   String _password = '';
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  GlobalMethods _globalMethods = GlobalMethods();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -24,11 +31,29 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
+      setState(() {
+        _isLoading = true;
+      });
       _formKey.currentState!.save();
+      try {
+        await _auth
+            .signInWithEmailAndPassword(
+                email: _emailAddress.toLowerCase().trim(),
+                password: _password.trim())
+            .then((value) =>
+                Navigator.canPop(context) ? Navigator.pop(context) : null);
+      } catch (error) {
+        _globalMethods.authErrorHandle(error.toString(), context);
+        print('error occured ${error.toString()}');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -61,28 +86,27 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 80),
-                height: 120.0,
-                width: 120.0,
-                decoration: BoxDecoration(
-                  //  color: Theme.of(context).backgroundColor,
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://image.flaticon.com/icons/png/128/869/869636.png',
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 80),
+                  height: 120.0,
+                  width: 120.0,
+                  decoration: BoxDecoration(
+                    //  color: Theme.of(context).backgroundColor,
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://image.flaticon.com/icons/png/128/869/869636.png',
+                      ),
+                      fit: BoxFit.fill,
                     ),
-                    fit: BoxFit.fill,
+                    shape: BoxShape.rectangle,
                   ),
-                  shape: BoxShape.rectangle,
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Form(
+                SizedBox(height: 30),
+                Form(
                   key: _formKey,
                   child: Column(
                     children: [
@@ -146,45 +170,65 @@ class _LoginScreenState extends State<LoginScreen> {
                           onEditingComplete: _submitForm,
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 20),
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, ForgetPassword.routeName);
+                              },
+                              child: Text(
+                                'Forget password?',
+                                style: TextStyle(
+                                    color: Colors.blue.shade900,
+                                    decoration: TextDecoration.underline),
+                              )),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SizedBox(width: 10),
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(
-                                      color: ColorsConsts.backgroundColor),
-                                ),
-                              )),
-                              onPressed: _submitForm,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 17),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Icon(
-                                    Feather.user,
-                                    size: 18,
-                                  )
-                                ],
-                              )),
+                          _isLoading
+                              ? CircularProgressIndicator()
+                              : ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(
+                                          color: ColorsConsts.backgroundColor),
+                                    ),
+                                  )),
+                                  onPressed: _submitForm,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Login',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 17),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Icon(
+                                        Feather.user,
+                                        size: 18,
+                                      )
+                                    ],
+                                  )),
                           SizedBox(width: 20),
                         ],
                       ),
                     ],
-                  ))
-            ],
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
