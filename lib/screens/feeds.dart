@@ -14,6 +14,8 @@ import 'cart/cart.dart';
 class Feeds extends StatefulWidget {
   static const routeName = '/Feeds';
 
+  Feeds({Key? key}) : super(key: key);
+
   @override
   _FeedsState createState() => _FeedsState();
 }
@@ -27,14 +29,11 @@ class _FeedsState extends State<Feeds> {
   @override
   Widget build(BuildContext context) {
     final popular = ModalRoute.of(context)!.settings.arguments as String;
-    final productsProvider = Provider.of<Products>(
-      context,
-    );
+    final productsProvider = Provider.of<Products>(context);
 
     List<Product> productsList = productsProvider.products;
-    if (popular == 'popular') {
-      productsList = productsProvider.popularProducts;
-    }
+    if (popular == 'popular') productsList = productsProvider.popularProducts;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
@@ -99,17 +98,6 @@ class _FeedsState extends State<Feeds> {
           }),
         ),
       ),
-
-//         StaggeredGridView.countBuilder(
-//           padding: ,
-//   crossAxisCount: 6,
-//   itemCount: 8,
-//   itemBuilder: (BuildContext context, int index) =>FeedProducts(),
-//   staggeredTileBuilder: (int index) =>
-//       new StaggeredTile.count(3, index.isEven ? 4 : 5),
-//   mainAxisSpacing: 8.0,
-//   crossAxisSpacing: 6.0,
-// ),
     );
   }
 }

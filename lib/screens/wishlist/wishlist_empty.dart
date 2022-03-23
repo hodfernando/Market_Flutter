@@ -5,6 +5,8 @@ import '../../provider/dark_theme_provider.dart';
 import '../feeds.dart';
 
 class WishlistEmpty extends StatelessWidget {
+  const WishlistEmpty({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -15,7 +17,7 @@ class WishlistEmpty extends StatelessWidget {
           margin: EdgeInsets.only(top: 80),
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
               image: AssetImage('assets/images/empty-wishlist.png'),
@@ -23,16 +25,16 @@ class WishlistEmpty extends StatelessWidget {
           ),
         ),
         Text(
-          'Your Wishlist Is Empty',
+          'Sua Lista de Desejos está vazia',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontSize: 36,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Text(
-          'Explore more and shortlist some items',
+          'Explore mais e selecione alguns itens',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: themeChange.darkTheme
@@ -41,8 +43,8 @@ class WishlistEmpty extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 30),
-        Container(
+        const SizedBox(height: 30),
+        SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
@@ -55,7 +57,7 @@ class WishlistEmpty extends StatelessWidget {
             ),
             color: Colors.redAccent,
             child: Text(
-              'Add a wish'.toUpperCase(),
+              'Adicionar um produto'.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).textSelectionColor,

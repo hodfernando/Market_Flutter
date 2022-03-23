@@ -30,25 +30,25 @@ class BackLayerMenu extends StatelessWidget {
               navigateTo(context, CartScreen.routeName);
             }, 'Cart', 1);
           },
-          child: const Text("Cart"),
+          child: const Text("Carrinho"),
         ),
         const SizedBox(height: 10.0),
         ElevatedButton(
           onPressed: () {
             content(context, () {
               navigateTo(context, WishlistScreen.routeName);
-            }, 'Wishlist', 2);
+            }, 'Lista de Desejos', 2);
           },
-          child: const Text("Wishlist"),
+          child: const Text("Lista de Desejos"),
         ),
         const SizedBox(height: 10.0),
         ElevatedButton(
           onPressed: () {
             content(context, () {
               navigateTo(context, UploadProductForm.routeName);
-            }, 'Upload a new product', 3);
+            }, 'Adicionar novo produto', 3);
           },
-          child: const Text("Upload a new product"),
+          child: const Text("Adicionar novo produto"),
         ),
       ],
       onTap: (int position) => {print(position)},

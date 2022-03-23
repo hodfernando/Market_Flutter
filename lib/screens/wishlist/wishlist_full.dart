@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../consts/colors.dart';
 import '../../models/favs_attr.dart';
 import '../../provider/favs_provider.dart';
 import '../../services/global_method.dart';
 
 class WishlistFull extends StatefulWidget {
-  final String productId;
+  const WishlistFull({Key? key, required this.productId}) : super(key: key);
 
-  const WishlistFull({required this.productId});
+  final String productId;
 
   @override
   _WishlistFullState createState() => _WishlistFullState();
@@ -23,7 +22,7 @@ class _WishlistFullState extends State<WishlistFull> {
       children: <Widget>[
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(right: 30.0, bottom: 10.0),
+          margin: const EdgeInsets.only(right: 30.0, bottom: 10.0),
           child: Material(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(5.0),
@@ -31,31 +30,27 @@ class _WishlistFullState extends State<WishlistFull> {
             child: InkWell(
               onTap: () {},
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       height: 80,
                       child: Image.network(favsAttr.imageUrl),
                     ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
+                    const SizedBox(width: 10.0),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             favsAttr.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
+                          const SizedBox(height: 20.0),
                           Text(
                             "\$ ${favsAttr.price}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18.0),
                           ),
                         ],
@@ -78,22 +73,22 @@ class _WishlistFullState extends State<WishlistFull> {
     return Positioned(
       top: 20,
       right: 15,
-      child: Container(
+      child: SizedBox(
         height: 30,
         width: 30,
         child: MaterialButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
-            padding: EdgeInsets.all(0.0),
+            padding: const EdgeInsets.all(0.0),
             color: ColorsConsts.favColor,
-            child: Icon(
+            child: const Icon(
               Icons.clear,
               color: Colors.white,
             ),
             onPressed: () => {
                   globalMethods.showDialogg(
-                      'Remove wish!',
-                      'This product will be removed from your wishlist!',
+                      'Remover produto!',
+                      'Este produto será removido da sua lista de desejos!',
                       () => favsProvider.removeItem(productId),
                       context),
                 }),

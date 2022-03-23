@@ -12,6 +12,8 @@ import 'cart/cart.dart';
 import 'orders/order.dart';
 
 class UserInfo extends StatefulWidget {
+  const UserInfo({Key? key}) : super(key: key);
+
   @override
   _UserInfoState createState() => _UserInfoState();
 }
@@ -57,7 +59,6 @@ class _UserInfoState extends State<UserInfo> {
         _userImageUrl = userDoc.get('imageUrl');
       });
     }
-    // print("name $_name");
   }
 
   @override
@@ -70,8 +71,6 @@ class _UserInfoState extends State<UserInfo> {
             controller: _scrollController,
             slivers: <Widget>[
               SliverAppBar(
-                // leading: Icon(Icons.ac_unit_outlined),
-                // automaticallyImplyLeading: false,
                 elevation: 0,
                 expandedHeight: 200,
                 pinned: true,
@@ -103,7 +102,7 @@ class _UserInfoState extends State<UserInfo> {
                               height: kToolbarHeight / 1.8,
                               width: kToolbarHeight / 1.8,
                               decoration: BoxDecoration(
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Colors.white,
                                     blurRadius: 1.0,
@@ -112,24 +111,26 @@ class _UserInfoState extends State<UserInfo> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: NetworkImage(_userImageUrl.isEmpty ?
-                                      'https://cdn-icons-png.flaticon.com/512/3011/3011270.png' : _userImageUrl),
+                                  image: NetworkImage(_userImageUrl.isEmpty
+                                      ? 'https://cdn-icons-png.flaticon.com/512/3011/3011270.png'
+                                      : _userImageUrl),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Text(
                               // 'top.toString()',
-                              _name == null ? 'Guest' : _name,
-                              style: TextStyle(
+                              _name == '' ? 'Convidado' : _name,
+                              style: const TextStyle(
                                   fontSize: 20.0, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
                       background: Image(
-                        image: NetworkImage(_userImageUrl.isEmpty ?
-                        'https://cdn-icons-png.flaticon.com/512/3011/3011270.png' : _userImageUrl),
+                        image: NetworkImage(_userImageUrl.isEmpty
+                            ? 'https://cdn-icons-png.flaticon.com/512/3011/3011270.png'
+                            : _userImageUrl),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -143,8 +144,8 @@ class _UserInfoState extends State<UserInfo> {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle(title: 'User Bag')),
-                    Divider(
+                        child: userTitle(title: 'Mochila')),
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
@@ -155,8 +156,8 @@ class _UserInfoState extends State<UserInfo> {
                             .pushNamed(WishlistScreen.routeName),
                         splashColor: Colors.red,
                         child: ListTile(
-                          title: Text('Wishlist'),
-                          trailing: Icon(Icons.chevron_right_rounded),
+                          title: const Text('Lista de Desejos'),
+                          trailing: const Icon(Icons.chevron_right_rounded),
                           leading: Icon(MyAppIcons.wishlist),
                         ),
                       ),
@@ -165,35 +166,34 @@ class _UserInfoState extends State<UserInfo> {
                       onTap: () {
                         Navigator.of(context).pushNamed(CartScreen.routeName);
                       },
-                      title: Text('Cart'),
-                      trailing: Icon(Icons.chevron_right_rounded),
+                      title: const Text('Carrinho'),
+                      trailing: const Icon(Icons.chevron_right_rounded),
                       leading: Icon(MyAppIcons.cart),
                     ),
                     ListTile(
                       onTap: () => Navigator.of(context)
                           .pushNamed(OrderScreen.routeName),
-                      title: Text('My Orders'),
-                      trailing: Icon(Icons.chevron_right_rounded),
+                      title: const Text('Minhas Compras'),
+                      trailing: const Icon(Icons.chevron_right_rounded),
                       leading: Icon(MyAppIcons.bag),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: userTitle(title: 'User Information'),
+                      child: userTitle(title: 'Informações do Usuário'),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
                     userListTile('Email', _email, 0, context),
-                    userListTile('Phone number', _phoneNumber,
-                        1, context),
-                    userListTile('Shipping address', '', 2, context),
-                    userListTile('joined date', _joinedAt, 3, context),
+                    userListTile('Telefone', _phoneNumber, 1, context),
+                    userListTile('Endereço', '', 2, context),
+                    userListTile('Data de Entrada', _joinedAt, 3, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: userTitle(title: 'User settings'),
+                      child: userTitle(title: 'Configurações do Usuário'),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
@@ -208,7 +208,7 @@ class _UserInfoState extends State<UserInfo> {
                       visualDensity: VisualDensity.comfortable,
                       switchType: SwitchType.cupertino,
                       switchActiveColor: Colors.indigo,
-                      title: Text('Dark theme'),
+                      title: const Text('Tema escuro'),
                     ),
                     Material(
                       color: Colors.transparent,
@@ -216,7 +216,6 @@ class _UserInfoState extends State<UserInfo> {
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
                           onTap: () async {
-                            // Navigator.canPop(context)? Navigator.pop(context):null;
                             showDialog(
                                 context: context,
                                 builder: (BuildContext ctx) {
@@ -227,40 +226,40 @@ class _UserInfoState extends State<UserInfo> {
                                           padding:
                                               const EdgeInsets.only(right: 6.0),
                                           child: Image.network(
-                                            'https://image.flaticon.com/icons/png/128/1828/1828304.png',
-                                            height: 20,
-                                            width: 20,
+                                            'https://cdn-icons-png.flaticon.com/512/1828/1828490.png',
+                                            height: 40,
+                                            width: 40,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                        const Padding(
+                                          padding: EdgeInsets.all(8.0),
                                           child: Text('Sign out'),
                                         ),
                                       ],
                                     ),
-                                    content: Text('Do you wanna Sign out?'),
+                                    content: const Text('Deseja sair?'),
                                     actions: [
                                       TextButton(
                                           onPressed: () async {
                                             Navigator.pop(context);
                                           },
-                                          child: Text('Cancel')),
+                                          child: const Text('Cancelar')),
                                       TextButton(
-                                          onPressed: () async {
-                                            await _auth.signOut().then(
-                                                (value) =>
-                                                    Navigator.pop(context));
-                                          },
-                                          child: Text(
-                                            'Ok',
-                                            style: TextStyle(color: Colors.red),
-                                          ))
+                                        onPressed: () async {
+                                          await _auth.signOut().then((value) =>
+                                              Navigator.pop(context));
+                                        },
+                                        child: const Text(
+                                          'Sair',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
                                     ],
                                   );
                                 });
                           },
-                          title: Text('Logout'),
-                          leading: Icon(Icons.exit_to_app_rounded),
+                          title: const Text('Logout'),
+                          leading: const Icon(Icons.exit_to_app_rounded),
                         ),
                       ),
                     ),
@@ -277,11 +276,11 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget _buildFab() {
     //starting fab position
-    final double defaultTopMargin = 200.0 - 4.0;
+    const double defaultTopMargin = 200.0 - 4.0;
     //pixels from top where scaling should start
-    final double scaleStart = 160.0;
+    const double scaleStart = 160.0;
     //pixels from top where scaling should end
-    final double scaleEnd = scaleStart / 2;
+    const double scaleEnd = scaleStart / 2;
 
     double top = defaultTopMargin;
     double scale = 1.0;
@@ -318,7 +317,7 @@ class _UserInfoState extends State<UserInfo> {
     );
   }
 
-  List<IconData> _userTileIcons = [
+  final List<IconData> _userTileIcons = [
     Icons.email,
     Icons.phone,
     Icons.local_shipping,
@@ -340,7 +339,7 @@ class _UserInfoState extends State<UserInfo> {
       padding: const EdgeInsets.all(14.0),
       child: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
     );
   }

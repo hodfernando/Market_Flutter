@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
-
 import '../../consts/colors.dart';
 import '../../inner_screens/product_details.dart';
 import '../../models/cart_attr.dart';
@@ -14,20 +13,6 @@ class CartFull extends StatefulWidget {
 
   const CartFull({required this.productId});
 
-  // final String id;
-  // final String productId;
-  // final double price;
-  // final int quatity;
-  // final String title;
-  // final String imageUrl;
-
-  // const CartFull(
-  //     {@required this.id,
-  //     @required this.productId,
-  //     @required this.price,
-  //     @required this.quatity,
-  //     @required this.title,
-  //     @required this.imageUrl});
   @override
   _CartFullState createState() => _CartFullState();
 }
@@ -88,8 +73,8 @@ class _CartFullState extends State<CartFull> {
                             // splashColor: ,
                             onTap: () {
                               globalMethods.showDialogg(
-                                  'Remove item!',
-                                  'Product will be removed from the cart!',
+                                  'Remover item!',
+                                  'O produto será removido do carrinho!',
                                   () =>
                                       cartProvider.removeItem(widget.productId),
                                   context);
@@ -110,7 +95,7 @@ class _CartFullState extends State<CartFull> {
                     ),
                     Row(
                       children: [
-                        Text('Price:'),
+                        Text('Preço:'),
                         SizedBox(width: 5),
                         Text(
                           '${cartAttr.price}\$',
@@ -141,13 +126,13 @@ class _CartFullState extends State<CartFull> {
                     Row(
                       children: [
                         Text(
-                          'Ships Free',
+                          'Frete Grátis',
                           style: TextStyle(
                               color: themeChange.darkTheme
                                   ? Colors.brown.shade900
                                   : Theme.of(context).accentColor),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Material(
                           color: Colors.transparent,
                           child: InkWell(

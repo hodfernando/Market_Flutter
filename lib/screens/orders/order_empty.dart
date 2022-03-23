@@ -5,6 +5,8 @@ import '../../provider/dark_theme_provider.dart';
 import '../feeds.dart';
 
 class OrderEmpty extends StatelessWidget {
+  const OrderEmpty({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -15,7 +17,7 @@ class OrderEmpty extends StatelessWidget {
           margin: EdgeInsets.only(top: 80),
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
               image: NetworkImage(
@@ -25,16 +27,16 @@ class OrderEmpty extends StatelessWidget {
           ),
         ),
         Text(
-          'Your order is Empty',
+          'Sua ordem de compra está vazia',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
               fontSize: 36,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Text(
-          'Looks Like You didn\'t \n order anything yet',
+          'Você ainda não possui pedidos',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: themeChange.darkTheme
@@ -43,8 +45,8 @@ class OrderEmpty extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(height: 30),
-        Container(
+        const SizedBox(height: 30),
+        SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
@@ -57,7 +59,7 @@ class OrderEmpty extends StatelessWidget {
             ),
             color: Colors.redAccent,
             child: Text(
-              'Shop now'.toUpperCase(),
+              'Compre Agora'.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).textSelectionColor,

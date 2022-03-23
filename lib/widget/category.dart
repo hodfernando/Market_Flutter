@@ -13,19 +13,19 @@ class CategoryWidget extends StatefulWidget {
 class _CategoryWidgetState extends State<CategoryWidget> {
   List<Map<String, String>> categories = [
     {
-      'categoryName': 'Phones',
+      'categoryName': 'Telefones',
       'categoryImagesPath': 'assets/images/CatPhones.png',
     },
     {
-      'categoryName': 'Clothes',
+      'categoryName': 'Roupas',
       'categoryImagesPath': 'assets/images/CatClothes.jpg',
     },
     {
-      'categoryName': 'Shoes',
+      'categoryName': 'Sapatos',
       'categoryImagesPath': 'assets/images/CatShoes.jpg',
     },
     {
-      'categoryName': 'Beauty&Health',
+      'categoryName': 'Beleza e Saúde',
       'categoryImagesPath': 'assets/images/CatBeauty.jpg',
     },
     {
@@ -33,11 +33,11 @@ class _CategoryWidgetState extends State<CategoryWidget> {
       'categoryImagesPath': 'assets/images/CatLaptops.png',
     },
     {
-      'categoryName': 'Furniture',
+      'categoryName': 'Mobília',
       'categoryImagesPath': 'assets/images/CatFurniture.jpg',
     },
     {
-      'categoryName': 'Watches',
+      'categoryName': 'Relógios',
       'categoryImagesPath': 'assets/images/CatWatches.jpg',
     },
   ];

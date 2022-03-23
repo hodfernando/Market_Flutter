@@ -9,13 +9,14 @@ import 'home.dart';
 class BottomBarScreen extends StatefulWidget {
   static const routeName = '/BottomBarScreen';
 
+  const BottomBarScreen({Key? key}) : super(key: key);
+
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  // List<Map<String, Object>> _pages;
-  int _selectedPageIndex = 1;
+  int _selectedPageIndex = 0;
   List<Widget> pages = [];
 
   @override
@@ -27,23 +28,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       CartScreen(),
       UserInfo(),
     ];
-    // _pages = [
-    //   {
-    //     'page': Home(),
-    //   },
-    //   {
-    //     'page': Feeds(),
-    //   },
-    //   {
-    //     'page': Search(),
-    //   },
-    //   {
-    //     'page': CartScreen(),
-    //   },
-    //   {
-    //     'page': UserInfo(),
-    //   },
-    // ];
     super.initState();
   }
 
@@ -56,16 +40,16 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_selectedPageIndex], //_pages[_selectedPageIndex]['page'],
+      body: pages[_selectedPageIndex],
       bottomNavigationBar: BottomAppBar(
         // color: Colors.white,
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 0.01,
         clipBehavior: Clip.antiAlias,
-        child: Container(
+        child: SizedBox(
           height: kBottomNavigationBarHeight * 0.98,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 top: BorderSide(
@@ -80,7 +64,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               unselectedItemColor: Theme.of(context).textSelectionColor,
               selectedItemColor: Colors.purple,
               currentIndex: _selectedPageIndex,
-              // selectedLabelStyle: TextStyle(fontSize: 16),
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(MyAppIcons.home),
@@ -89,15 +72,12 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 ),
                 BottomNavigationBarItem(
                     icon: Icon(MyAppIcons.rss), label: 'Feeds'),
+                const BottomNavigationBarItem(
+                    activeIcon: null, icon: Icon(null), label: 'Procurar'),
                 BottomNavigationBarItem(
-                    activeIcon: null, icon: Icon(null), label: 'Search'),
+                    icon: Icon(MyAppIcons.bag), label: 'Carrinho'),
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      MyAppIcons.bag,
-                    ),
-                    label: 'Cart'),
-                BottomNavigationBarItem(
-                    icon: Icon(MyAppIcons.user), label: 'User'),
+                    icon: Icon(MyAppIcons.user), label: 'Usuário'),
               ],
             ),
           ),
@@ -111,7 +91,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           backgroundColor: Colors.purple,
           hoverElevation: 10,
           splashColor: Colors.grey,
-          tooltip: 'Search',
+          tooltip: 'Procurar',
           elevation: 4,
           child: Icon(MyAppIcons.search),
           onPressed: () => setState(() {

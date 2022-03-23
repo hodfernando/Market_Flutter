@@ -14,6 +14,8 @@ import '../../services/global_method.dart';
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/SignUpScreen';
 
+  SignUpScreen({Key? key}) : super(key: key);
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -52,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _formKey.currentState!.save();
       try {
         if (_pickedImage == null) {
-          _globalMethods.authErrorHandle('Please pick an image', context);
+          _globalMethods.authErrorHandle('Escolha uma foto', context);
         } else {
           setState(() {
             _isLoading = true;
@@ -185,7 +187,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text(
-                                      'Choose option',
+                                      'Escolha uma opção',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: ColorsConsts.gradiendLStart),
@@ -232,7 +234,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Gallery',
+                                                  'Galeria',
                                                   style: TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
@@ -257,7 +259,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Remove',
+                                                  'Remover',
                                                   style: TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
@@ -277,165 +279,163 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('name'),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'name cannot be null';
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_emailFocusNode),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.person),
-                                labelText: 'Full name',
-                                fillColor: Theme.of(context).backgroundColor),
-                            onSaved: (value) {
-                              _fullName = value!;
-                            },
-                          ),
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          key: ValueKey('name'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Digite seu nome';
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_emailFocusNode),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              border: const UnderlineInputBorder(),
+                              filled: true,
+                              prefixIcon: Icon(Icons.person),
+                              labelText: 'Nome completo',
+                              fillColor: Theme.of(context).backgroundColor),
+                          onSaved: (value) {
+                            _fullName = value!;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('email'),
-                            focusNode: _emailFocusNode,
-                            validator: (value) {
-                              if (value!.isEmpty || !value.contains('@')) {
-                                return 'Please enter a valid email address';
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_passwordFocusNode),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.email),
-                                labelText: 'Email Address',
-                                fillColor: Theme.of(context).backgroundColor),
-                            onSaved: (value) {
-                              _emailAddress = value!;
-                            },
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          key: ValueKey('email'),
+                          focusNode: _emailFocusNode,
+                          validator: (value) {
+                            if (value!.isEmpty || !value.contains('@')) {
+                              return 'Digite um email válido';
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_passwordFocusNode),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              border: const UnderlineInputBorder(),
+                              filled: true,
+                              prefixIcon: Icon(Icons.email),
+                              labelText: 'Email',
+                              fillColor: Theme.of(context).backgroundColor),
+                          onSaved: (value) {
+                            _emailAddress = value!;
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('Password'),
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 7) {
-                                return 'Please enter a valid Password';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.emailAddress,
-                            focusNode: _passwordFocusNode,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.lock),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  child: Icon(_obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                ),
-                                labelText: 'Password',
-                                fillColor: Theme.of(context).backgroundColor),
-                            onSaved: (value) {
-                              _password = value!;
-                            },
-                            obscureText: _obscureText,
-                            onEditingComplete: () => FocusScope.of(context)
-                                .requestFocus(_phoneNumberFocusNode),
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          key: ValueKey('Password'),
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 7) {
+                              return 'Entre com uma senha válida';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          focusNode: _passwordFocusNode,
+                          decoration: InputDecoration(
+                              border: const UnderlineInputBorder(),
+                              filled: true,
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                                child: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                              ),
+                              labelText: 'Senha',
+                              fillColor: Theme.of(context).backgroundColor),
+                          onSaved: (value) {
+                            _password = value!;
+                          },
+                          obscureText: _obscureText,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_phoneNumberFocusNode),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            key: ValueKey('phone number'),
-                            focusNode: _phoneNumberFocusNode,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter a valid phone number';
-                              }
-                              return null;
-                            },
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: _submitForm,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                border: const UnderlineInputBorder(),
-                                filled: true,
-                                prefixIcon: Icon(Icons.phone_android),
-                                labelText: 'Phone number',
-                                fillColor: Theme.of(context).backgroundColor),
-                            onSaved: (value) {
-                              _phoneNumber = value!;
-                            },
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(width: 10),
-                            _isLoading
-                                ? CircularProgressIndicator()
-                                : ElevatedButton(
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        side: BorderSide(
-                                            color:
-                                                ColorsConsts.backgroundColor),
-                                      ),
-                                    )),
-                                    onPressed: _submitForm,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Sign up',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Icon(
-                                          Feather.user,
-                                          size: 18,
-                                        )
-                                      ],
-                                    )),
-                            SizedBox(width: 20),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          key: ValueKey('phone number'),
+                          focusNode: _phoneNumberFocusNode,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Digite seu numero de telefone';
+                            }
+                            return null;
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
                           ],
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: _submitForm,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                              border: const UnderlineInputBorder(),
+                              filled: true,
+                              prefixIcon: Icon(Icons.phone_android),
+                              labelText: 'Telefone',
+                              fillColor: Theme.of(context).backgroundColor),
+                          onSaved: (value) {
+                            _phoneNumber = value!;
+                          },
                         ),
-                      ],
-                    ))
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(width: 10),
+                          _isLoading
+                              ? CircularProgressIndicator()
+                              : ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(
+                                          color: ColorsConsts.backgroundColor),
+                                    ),
+                                  )),
+                                  onPressed: _submitForm,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Sign up',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 17),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Icon(
+                                        Feather.user,
+                                        size: 18,
+                                      )
+                                    ],
+                                  )),
+                          const SizedBox(width: 20),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

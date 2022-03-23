@@ -5,6 +5,8 @@ import '../../provider/dark_theme_provider.dart';
 import '../feeds.dart';
 
 class CartEmpty extends StatelessWidget {
+  const CartEmpty({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -23,7 +25,7 @@ class CartEmpty extends StatelessWidget {
           ),
         ),
         Text(
-          'Your Cart Is Empty',
+          'Seu carrinho está vazio',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Theme.of(context).textSelectionColor,
@@ -34,7 +36,7 @@ class CartEmpty extends StatelessWidget {
           height: 30,
         ),
         Text(
-          'Looks Like You didn\'t \n add anything to your cart yet',
+          'Você ainda não adicionou nada no seu carrinho',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: themeChange.darkTheme
@@ -43,10 +45,8 @@ class CartEmpty extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w600),
         ),
+        const SizedBox(height: 30),
         SizedBox(
-          height: 30,
-        ),
-        Container(
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.06,
           child: RaisedButton(
@@ -59,7 +59,7 @@ class CartEmpty extends StatelessWidget {
             ),
             color: Colors.redAccent,
             child: Text(
-              'Shop now'.toUpperCase(),
+              'Compre agora'.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).textSelectionColor,

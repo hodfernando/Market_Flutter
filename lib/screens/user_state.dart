@@ -4,6 +4,8 @@ import 'landing_page.dart';
 import 'main_screen.dart';
 
 class UserState extends StatelessWidget {
+  const UserState({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -16,17 +18,17 @@ class UserState extends StatelessWidget {
           if (userSnapshot.connectionState == ConnectionState.active) {
             if (userSnapshot.hasData) {
               print('The user is already logged in');
-              return MainScreens();
+              return const MainScreens();
             } else {
               print('The user didn\'t login yet');
               return LandingPage();
             }
           } else if (userSnapshot.hasError) {
-            return Center(
+            return const Center(
               child: Text('Error occured'),
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }

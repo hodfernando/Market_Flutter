@@ -41,14 +41,10 @@ class _FeedProductsState extends State<FeedProducts> {
                           height: MediaQuery.of(context).size.height * 0.3,
                           child: Image.network(
                             productsAttributes.imageUrl,
-                            //   fit: BoxFit.fitWidth,
                           ),
                         ),
                       ),
                       Positioned(
-                        // bottom: 0,
-                        // right: 5,
-                        // top: 5,
                         child: Badge(
                           alignment: Alignment.center,
                           toAnimate: true,
@@ -70,9 +66,7 @@ class _FeedProductsState extends State<FeedProducts> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 4,
-                    ),
+                    SizedBox(height: 4),
                     Text(
                       productsAttributes.description,
                       overflow: TextOverflow.ellipsis,

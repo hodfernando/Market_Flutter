@@ -9,6 +9,8 @@ import '../../provider/dark_theme_provider.dart';
 import '../../services/global_method.dart';
 
 class OrderFull extends StatefulWidget {
+  const OrderFull({Key? key}) : super(key: key);
+
   @override
   _OrderFullState createState() => _OrderFullState();
 }
@@ -30,9 +32,9 @@ class _OrderFullState extends State<OrderFull> {
         height: 150,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomRight: const Radius.circular(16.0),
-            topRight: const Radius.circular(16.0),
+          borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
           ),
           color: Theme.of(context).backgroundColor,
         ),
@@ -71,7 +73,7 @@ class _OrderFullState extends State<OrderFull> {
                             // splashColor: ,
                             onTap: () {
                               globalMethods.showDialogg(
-                                  'Remove order!', 'Order wwill be deleted!',
+                                  'Remove order!', 'Order will be deleted!',
                                   () async {
                                 setState(() {
                                   _isLoading = true;
@@ -100,8 +102,8 @@ class _OrderFullState extends State<OrderFull> {
                     ),
                     Row(
                       children: [
-                        Text('Price:'),
-                        SizedBox(width: 5),
+                        Text('Preço: '),
+                        const SizedBox(width: 5),
                         Text(
                           '${orderAttrProvider.price}\$',
                           style: TextStyle(
@@ -111,8 +113,8 @@ class _OrderFullState extends State<OrderFull> {
                     ),
                     Row(
                       children: [
-                        Text('Quantity:'),
-                        SizedBox(width: 5),
+                        const Text('Quantity: '),
+                        const SizedBox(width: 5),
                         Text(
                           'x${orderAttrProvider.quantity}',
                           style: TextStyle(
@@ -122,8 +124,8 @@ class _OrderFullState extends State<OrderFull> {
                     ),
                     Row(
                       children: [
-                        Flexible(child: Text('Order ID:')),
-                        SizedBox(width: 5),
+                        const Flexible(child: Text('Order ID:')),
+                        const SizedBox(width: 5),
                         Flexible(
                           child: Text(
                             'x${orderAttrProvider.orderId}',

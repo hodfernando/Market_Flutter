@@ -8,6 +8,8 @@ import '../widget/feeds_products.dart';
 import '../widget/searchby_header.dart';
 
 class Search extends StatefulWidget {
+  const Search({Key? key}) : super(key: key);
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -16,6 +18,7 @@ class _SearchState extends State<Search> {
   late TextEditingController _searchTextController;
   final FocusNode _node = FocusNode();
 
+  @override
   void initState() {
     super.initState();
     _searchTextController = TextEditingController();
@@ -50,7 +53,7 @@ class _SearchState extends State<Search> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Search",
+                      text: "Procurar",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: ColorsConsts.title,
@@ -61,7 +64,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               stackChild: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -74,7 +77,7 @@ class _SearchState extends State<Search> {
                     ),
                   ],
                 ),
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
                   controller: _searchTextController,
                   minLines: 1,
@@ -82,15 +85,13 @@ class _SearchState extends State<Search> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         width: 0,
                         style: BorderStyle.none,
                       ),
                     ),
-                    prefixIcon: Icon(
-                      Icons.search,
-                    ),
-                    hintText: 'Search',
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: 'Procurar',
                     filled: true,
                     fillColor: Theme.of(context).cardColor,
                     suffixIcon: IconButton(
@@ -119,7 +120,7 @@ class _SearchState extends State<Search> {
           SliverToBoxAdapter(
             child: _searchTextController.text.isNotEmpty && _searchList.isEmpty
                 ? Column(
-                    children: [
+                    children: const [
                       SizedBox(height: 50),
                       Icon(
                         Feather.search,
@@ -127,7 +128,7 @@ class _SearchState extends State<Search> {
                       ),
                       SizedBox(height: 50),
                       Text(
-                        'No results found',
+                        'Nenhum resultado encontrado',
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),

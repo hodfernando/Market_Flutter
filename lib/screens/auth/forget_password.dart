@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../services/global_method.dart';
 
 class ForgetPassword extends StatefulWidget {
   static const routeName = '/ForgetPassword';
+
+  ForgetPassword({Key? key}) : super(key: key);
 
   @override
   _ForgetPasswordState createState() => _ForgetPasswordState();
@@ -31,7 +32,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         await _auth
             .sendPasswordResetEmail(email: _emailAddress.trim().toLowerCase())
             .then((value) => Fluttertoast.showToast(
-                msg: "An email has been sent",
+                msg: "O email de confirmação foi enviado",
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
@@ -63,7 +64,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Forget password',
+              'Esqueci a senha',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
           ),
@@ -75,7 +76,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 key: ValueKey('email'),
                 validator: (value) {
                   if (value!.isEmpty || !value.contains('@')) {
-                    return 'Please enter a valid email address';
+                    return 'Entre com um email válido!';
                   }
                   return null;
                 },
@@ -85,7 +86,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     border: const UnderlineInputBorder(),
                     filled: true,
                     prefixIcon: Icon(Icons.email),
-                    labelText: 'Email Address',
+                    labelText: 'Email',
                     fillColor: Theme.of(context).backgroundColor),
                 onSaved: (value) {
                   _emailAddress = value!;
@@ -115,9 +116,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     onPressed: _submitForm,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
-                          'Reset password',
+                          'Resetar senha',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 17),
                         ),

@@ -7,6 +7,8 @@ import 'auth/login.dart';
 import 'auth/sign_up.dart';
 
 class LandingPage extends StatefulWidget {
+  const LandingPage({Key? key}) : super(key: key);
+
   @override
   _LandingPageState createState() => _LandingPageState();
 }
@@ -111,7 +113,7 @@ class _LandingPageState extends State<LandingPage>
           // CachedNetworkImage(
           //   imageUrl: images[1],
           //   // placeholder: (context, url) => Image.network(
-          //   //   'https://image.flaticon.com/icons/png/128/564/564619.png',
+          //   //   'https://cdn-icons-png.flaticon.com/512/7066/7066506.png',
           //   //   fit: BoxFit.contain,
           //   // ),
           //   errorWidget: (context, url, error) => Icon(Icons.error),
@@ -205,7 +207,7 @@ class _LandingPageState extends State<LandingPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Text(
-                            'Sign up',
+                            'Inscrever-se',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 17),
                           ),
@@ -270,7 +272,7 @@ class _LandingPageState extends State<LandingPage>
                           highlightedBorderColor: Colors.deepPurple.shade200,
                           borderSide: const BorderSide(
                               width: 2, color: Colors.deepPurple),
-                          child: const Text('Sign in as a guest'),
+                          child: const Text('Entrar como convidado'),
                         ),
                 ],
               ),

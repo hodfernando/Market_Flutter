@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-
 import '../../consts/colors.dart';
 import '../../services/global_method.dart';
 import 'forget_password.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -98,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       image: NetworkImage(
-                        'https://image.flaticon.com/icons/png/128/869/869636.png',
+                        'https://cdn-icons-png.flaticon.com/512/1828/1828490.png',
                       ),
                       fit: BoxFit.fill,
                     ),
@@ -116,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           key: ValueKey('email'),
                           validator: (value) {
                             if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
+                              return 'Entre com um email válido';
                             }
                             return null;
                           },
@@ -128,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: const UnderlineInputBorder(),
                               filled: true,
                               prefixIcon: Icon(Icons.email),
-                              labelText: 'Email Address',
+                              labelText: 'Email',
                               fillColor: Theme.of(context).backgroundColor),
                           onSaved: (value) {
                             _emailAddress = value!;
@@ -138,10 +139,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: TextFormField(
-                          key: ValueKey('Password'),
+                          key: ValueKey('Senha'),
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
-                              return 'Please enter a valid Password';
+                              return 'Entre com uma senha válida';
                             }
                             return null;
                           },
@@ -161,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ? Icons.visibility
                                     : Icons.visibility_off),
                               ),
-                              labelText: 'Password',
+                              labelText: 'Senha',
                               fillColor: Theme.of(context).backgroundColor),
                           onSaved: (value) {
                             _password = value!;
@@ -181,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context, ForgetPassword.routeName);
                               },
                               child: Text(
-                                'Forget password?',
+                                'Esqueceu a senha?',
                                 style: TextStyle(
                                     color: Colors.blue.shade900,
                                     decoration: TextDecoration.underline),
@@ -207,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPressed: _submitForm,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
+                                    children: const [
                                       Text(
                                         'Login',
                                         style: TextStyle(
@@ -221,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       )
                                     ],
                                   )),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                         ],
                       ),
                     ],

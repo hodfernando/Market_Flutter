@@ -17,22 +17,17 @@ class Products with ChangeNotifier {
         .then((QuerySnapshot productsSnapshot) {
       _products = [];
       productsSnapshot.docs.forEach((element) {
-        // print('element.get(productBrand), ${element.get('productBrand')}');
-        _products.insert(
-          0,
+        // print('element.get(price), ${double.parse(element.get('price'))}');
+        _products.add(
           Product(
             id: element.get('productId'),
             title: element.get('productTitle'),
             description: element.get('productDescription'),
-            price: double.parse(
-              element.get('price'),
-            ),
+            price: double.parse(element.get('price')),
             imageUrl: element.get('productImage'),
             brand: element.get('productBrand'),
             productCategoryName: element.get('productCategory'),
-            quantity: int.parse(
-              element.get('price'),
-            ),
+            quantity: int.parse(element.get('productQuantity')),
             isPopular: true,
             isFavorite: false,
           ),

@@ -37,7 +37,6 @@ class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
 
   void getCurrentAppTheme() async {
-    print('called ,mmmmm');
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreferences.getTheme();
   }
@@ -93,13 +92,11 @@ class _MyAppState extends State<MyApp> {
             child: Consumer<DarkThemeProvider>(
               builder: (context, themeChangeProvider, ch) {
                 return MaterialApp(
-                  title: 'Flutter Shop',
+                  title: 'Flutter Market',
                   theme:
                       Styles.themeData(themeChangeProvider.darkTheme, context),
                   home: UserState(),
-                  //initialRoute: '/',
                   routes: {
-                    //   '/': (ctx) => LandingPage(),
                     BrandNavigationRailScreen.routeName: (ctx) =>
                         BrandNavigationRailScreen(),
                     CartScreen.routeName: (ctx) => CartScreen(),

@@ -12,6 +12,8 @@ import '../widget/popular_products.dart';
 import 'feeds.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -34,19 +36,24 @@ class _HomeState extends State<Home> {
     'assets/images/huawei.jpg',
   ];
 
+  Future<void> _getProductsOnRefresh() async {
+    await Provider.of<Products>(context, listen: false).fetchProducts();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     productsData.fetchProducts();
 
     final popularItems = productsData.popularProducts;
-    print('popularItems length ${popularItems.length}');
+    // print('popularItems length ${popularItems.length}');
     return Scaffold(
       body: BackdropScaffold(
         frontLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
         headerHeight: MediaQuery.of(context).size.height * 0.25,
         appBar: BackdropAppBar(
-          title: Text("Home"),
+          title: const Text("Home"),
           leading: BackdropToggleButton(icon: AnimatedIcons.home_menu),
           flexibleSpace: Container(
             decoration: BoxDecoration(
@@ -59,7 +66,7 @@ class _HomeState extends State<Home> {
             IconButton(
               iconSize: 15,
               padding: const EdgeInsets.all(10),
-              icon: CircleAvatar(
+              icon: const CircleAvatar(
                 radius: 15,
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
@@ -77,14 +84,14 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: 190.0,
                 width: double.infinity,
                 child: Carousel(
                   boxFit: BoxFit.fill,
                   autoplay: true,
                   animationCurve: Curves.fastOutSlowIn,
-                  animationDuration: Duration(milliseconds: 1000),
+                  animationDuration: const Duration(milliseconds: 1000),
                   dotSize: 5.0,
                   dotIncreasedColor: Colors.purple,
                   dotBgColor: Colors.black.withOpacity(0.2),
@@ -99,14 +106,14 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Categories',
+                  'Categorias',
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 180,
                 child: ListView.builder(
@@ -121,12 +128,12 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Text(
-                      'Popular Brands',
+                    const Text(
+                      'Marcas Populares',
                       style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     FlatButton(
                       onPressed: () {
                         Navigator.of(context).pushNamed(
@@ -134,8 +141,8 @@ class _HomeState extends State<Home> {
                           arguments: {7},
                         );
                       },
-                      child: Text(
-                        'View all...',
+                      child: const Text(
+                        'Ver todas...',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 15,
@@ -179,18 +186,18 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Text(
-                      'Popular Products',
+                    const Text(
+                      'Produtos Populares',
                       style:
                           TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     FlatButton(
                       onPressed: () {
                         Navigator.of(context)
                             .pushNamed(Feeds.routeName, arguments: 'popular');
                       },
-                      child: Text(
+                      child: const Text(
                         'View all...',
                         style: TextStyle(
                             fontWeight: FontWeight.w800,
@@ -201,24 +208,22 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 285,
-                margin: EdgeInsets.symmetric(horizontal: 3),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: popularItems.length,
-                    itemBuilder: (BuildContext ctx, int index) {
-                      return ChangeNotifierProvider.value(
-                        value: popularItems[index],
-                        child: PopularProducts(
-                            // imageUrl: popularItems[index].imageUrl,
-                            // title: popularItems[index].title,
-                            // description: popularItems[index].description,
-                            // price: popularItems[index].price,
-                            ),
-                      );
-                    }),
+              RefreshIndicator(
+                onRefresh: _getProductsOnRefresh,
+                child: Container(
+                  width: double.infinity,
+                  height: 285,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: popularItems.length,
+                      itemBuilder: (BuildContext ctx, int index) {
+                        return ChangeNotifierProvider.value(
+                          value: popularItems[index],
+                          child: PopularProducts(),
+                        );
+                      }),
+                ),
               )
             ],
           ),

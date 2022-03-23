@@ -10,6 +10,8 @@ import 'wishlist_full.dart';
 class WishlistScreen extends StatelessWidget {
   static const routeName = '/WishlistScreen';
 
+  WishlistScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     GlobalMethods globalMethods = GlobalMethods();
@@ -18,13 +20,14 @@ class WishlistScreen extends StatelessWidget {
         ? Scaffold(body: WishlistEmpty())
         : Scaffold(
             appBar: AppBar(
-              title: Text('Wishlist (${favsProvider.getFavsItems.length})'),
+              title: Text(
+                  'Lista de Desejos (${favsProvider.getFavsItems.length})'),
               actions: [
                 IconButton(
                   onPressed: () {
                     globalMethods.showDialogg(
-                        'Clear wishlist!',
-                        'Your wishlist will be cleared!',
+                        'Limpar a lista de desejos!',
+                        'Sua lista de desejos será limpa!',
                         () => favsProvider.clearFavs(),
                         context);
                     // cartProvider.clearCart();
@@ -37,10 +40,11 @@ class WishlistScreen extends StatelessWidget {
               itemCount: favsProvider.getFavsItems.length,
               itemBuilder: (BuildContext ctx, int index) {
                 return ChangeNotifierProvider.value(
-                    value: favsProvider.getFavsItems.values.toList()[index],
-                    child: WishlistFull(
-                      productId: favsProvider.getFavsItems.keys.toList()[index],
-                    ));
+                  value: favsProvider.getFavsItems.values.toList()[index],
+                  child: WishlistFull(
+                    productId: favsProvider.getFavsItems.keys.toList()[index],
+                  ),
+                );
               },
             ),
           );

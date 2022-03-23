@@ -13,18 +13,20 @@ import '../services/global_method.dart';
 class UploadProductForm extends StatefulWidget {
   static const routeName = '/UploadProductForm';
 
+  UploadProductForm({Key? key}) : super(key: key);
+
   @override
   _UploadProductFormState createState() => _UploadProductFormState();
 }
 
 class _UploadProductFormState extends State<UploadProductForm> {
   final _formKey = GlobalKey<FormState>();
-  var _productTitle = '';
-  var _productPrice = '';
-  var _productCategory = '';
-  var _productBrand = '';
-  var _productDescription = '';
-  var _productQuantity = '';
+  String _productTitle = '';
+  String _productPrice = '';
+  String _productCategory = '';
+  String _productBrand = '';
+  String _productDescription = '';
+  String _productQuantity = '';
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
   String _categoryValue = "Sem Categoria";
@@ -34,7 +36,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
   File? _pickedImage;
   bool _isLoading = false;
   String url = '';
-  var uuid = Uuid();
+  Uuid uuid = Uuid();
 
   showAlertDialog(BuildContext context, String title, String body) {
     // show the dialog
@@ -165,7 +167,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
         width: double.infinity,
         decoration: BoxDecoration(
           color: ColorsConsts.white,
-          border: Border(
+          border: const Border(
             top: BorderSide(
               color: Colors.grey,
               width: 0.5,
@@ -184,12 +186,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                 Padding(
                   padding: const EdgeInsets.only(right: 2),
                   child: _isLoading
-                      ? Center(
-                          child: Container(
+                      ? const Center(
+                          child: SizedBox(
                               height: 40,
                               width: 40,
                               child: CircularProgressIndicator()))
-                      : Text('Upload',
+                      : const Text('Upload',
                           style: TextStyle(fontSize: 16),
                           textAlign: TextAlign.center),
                 ),
@@ -218,9 +220,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
           children: [
             Center(
               child: Card(
-                margin: EdgeInsets.all(15),
+                margin: const EdgeInsets.all(15),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -235,7 +237,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 9),
                                 child: TextFormField(
-                                  key: ValueKey('Título'),
+                                  key: const ValueKey('Título'),
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Insira um Título';
@@ -243,8 +245,8 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     return null;
                                   },
                                   keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                    labelText: 'Título do Produto',
+                                  decoration: const InputDecoration(
+                                    labelText: 'Título do Produto'
                                   ),
                                   onSaved: (value) {
                                     _productTitle = value!;
@@ -255,8 +257,10 @@ class _UploadProductFormState extends State<UploadProductForm> {
                             Flexible(
                               flex: 1,
                               child: TextFormField(
-                                key: const ValueKey('Preço \$'),
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                key: const ValueKey('Preço \$ '),
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Sem Preço';
@@ -267,8 +271,8 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r"^\d*\.?\d*")),
                                 ],
-                                decoration: InputDecoration(
-                                  labelText: 'Preço R\$',
+                                decoration: const InputDecoration(
+                                  labelText: 'Preço R\$ ',
                                   //  prefixIcon: Icon(Icons.mail),
                                   // suffixIcon: Text(
                                   //   '\n \n \$',
@@ -283,14 +287,13 @@ class _UploadProductFormState extends State<UploadProductForm> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        /* Image picker here ***********************************/
+                        const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Expanded(
                               //  flex: 2,
-                              child: this._pickedImage == null
+                              child: _pickedImage == null
                                   ? Container(
                                       margin: EdgeInsets.all(10),
                                       height: 200,
@@ -303,7 +306,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       ),
                                     )
                                   : Container(
-                                      margin: EdgeInsets.all(10),
+                                      margin: const EdgeInsets.all(10),
                                       height: 200,
                                       width: 200,
                                       child: Container(
@@ -317,7 +320,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                               Theme.of(context).backgroundColor,
                                         ),
                                         child: Image.file(
-                                          this._pickedImage!,
+                                          _pickedImage!,
                                           fit: BoxFit.contain,
                                           alignment: Alignment.center,
                                         ),
@@ -332,7 +335,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   child: FlatButton.icon(
                                     textColor: Colors.white,
                                     onPressed: _pickImageCamera,
-                                    icon: Icon(Icons.camera,
+                                    icon: const Icon(Icons.camera,
                                         color: Colors.purpleAccent),
                                     label: Text(
                                       'Camera',
@@ -348,7 +351,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   child: FlatButton.icon(
                                     textColor: Colors.white,
                                     onPressed: _pickImageGallery,
-                                    icon: Icon(Icons.image,
+                                    icon: const Icon(Icons.image,
                                         color: Colors.purpleAccent),
                                     label: Text(
                                       'Galeria',
@@ -364,11 +367,11 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   child: FlatButton.icon(
                                     textColor: Colors.white,
                                     onPressed: _removeImage,
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.remove_circle_rounded,
                                       color: Colors.red,
                                     ),
-                                    label: Text(
+                                    label: const Text(
                                       'Remover',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -390,24 +393,22 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               // flex: 3,
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 9),
-                                child: Container(
-                                  child: TextFormField(
-                                    controller: _categoryController,
-                                    key: ValueKey('Categoria'),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Entre com uma nova Categoria';
-                                      }
-                                      return null;
-                                    },
-                                    //keyboardType: TextInputType.emailAddress,
-                                    decoration: InputDecoration(
-                                      labelText: 'Adicione uma nova Categoria',
-                                    ),
-                                    onSaved: (value) {
-                                      _productCategory = value!;
-                                    },
+                                child: TextFormField(
+                                  controller: _categoryController,
+                                  key: ValueKey('Categoria'),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Entre com uma nova Categoria';
+                                    }
+                                    return null;
+                                  },
+                                  //keyboardType: TextInputType.emailAddress,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Adicione uma nova Categoria'
                                   ),
+                                  onSaved: (value) {
+                                    _productCategory = value!;
+                                  },
                                 ),
                               ),
                             ),
@@ -427,7 +428,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                 ),
                                 DropdownMenuItem<String>(
                                   child: Text('Beleza e Saúde'),
-                                  value: 'Beleza',
+                                  value: 'Beleza e Saúde',
                                 ),
                                 DropdownMenuItem<String>(
                                   child: Text('Sapatos'),
@@ -450,12 +451,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   print(_productCategory);
                                 });
                               },
-                              hint: Text('Selecione a Categoria'),
+                              hint: const Text('Selecione a Categoria'),
                               value: _categoryValue,
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -463,25 +464,23 @@ class _UploadProductFormState extends State<UploadProductForm> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 9),
-                                child: Container(
-                                  child: TextFormField(
-                                    controller: _brandController,
+                                child: TextFormField(
+                                  controller: _brandController,
 
-                                    key: ValueKey('Marca'),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Escolha a Marca';
-                                      }
-                                      return null;
-                                    },
-                                    //keyboardType: TextInputType.emailAddress,
-                                    decoration: InputDecoration(
-                                      labelText: 'Marca',
-                                    ),
-                                    onSaved: (value) {
-                                      _productBrand = value!;
-                                    },
+                                  key: const ValueKey('Marca'),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Escolha a Marca';
+                                    }
+                                    return null;
+                                  },
+                                  //keyboardType: TextInputType.emailAddress,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Marca'
                                   ),
+                                  onSaved: (value) {
+                                    _productBrand = value!;
+                                  },
                                 ),
                               ),
                             ),
@@ -527,12 +526,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   print(_productBrand);
                                 });
                               },
-                              hint: Text('Selecione a Marca'),
+                              hint: const Text('Selecione a Marca'),
                               value: _brandValue,
                             ),
                           ],
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         TextFormField(
                             key: ValueKey('Descrição'),
                             validator: (value) {
@@ -544,7 +543,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                             //controller: this._controller,
                             maxLines: 10,
                             textCapitalization: TextCapitalization.sentences,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               //  counterText: charLength.toString(),
                               labelText: 'Descrição',
                               hintText: 'Descrição do Produto',
@@ -567,14 +566,14 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                 padding: const EdgeInsets.only(right: 9),
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
-                                  key: ValueKey('Quantidade'),
+                                  key: const ValueKey('Quantidade'),
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Quantidade é zero';
                                     }
                                     return null;
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     labelText: 'Quantidade',
                                   ),
                                   onSaved: (value) {
